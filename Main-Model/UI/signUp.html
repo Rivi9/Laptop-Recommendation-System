@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./signUpStyle.css">
+    <script defer src="./SignUp.js"></script>
+</head>
+<body>
+    <div class="container">
+        <form id="form" >
+            <h1>Registration</h1>
+            <div class="input-control">
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" placeholder="Enter your Username">
+                <div class="error"></div>
+            </div>
+            <div class="input-control">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="text" placeholder="Enter your Email">
+                <div class="error"></div>
+            </div>
+            <div class="input-control">
+                Gender
+                <select name="Gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select><br>
+            </div>
+            <div class="input-control">
+                <label for="dob">Date of birth </label>
+                <input type="date" id="dob" placeholder="Enter your birthday" name="dob"><br>
+            </div>
+            <div class="input-control">
+                <label for="password">Password</label>
+                <input id="password"name="password" type="password" placeholder="Enter your password">
+                <div class="error"></div>
+            </div>
+
+            <div class="input-control">
+                <label for="password2">Re-enter Password</label>
+                <input id="password2"name="password2" type="password" placeholder="Repeat your password">
+                <div class="error"></div>
+            </div>
+            <p>By creating an account you agree to our <a href="T&C.html" target="_blank" style="color:dodgerblue">Terms & Privacy</a>.</p>
+            <button  type="submit">Sign Up</button>
+        </form>
+    </div>
+</body>
+</html>
