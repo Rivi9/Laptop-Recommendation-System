@@ -7,7 +7,9 @@
 </head>
 <body>
     <h1>Select GPU:</h1>
-    <select name="gpu" id="gpu"></select>
+    <div class="input-box">
+        <select name="gpu" id="gpu"></select>
+    </div>
 
     <script>
         // Function to fetch and process the CSV data
@@ -19,11 +21,12 @@
             // Parse CSV data and extract GPU information
             csvData.split('\n').forEach(row => {
                 const columns = row.split(',');
-                const gpu = columns[10].trim(); // Assuming GPU information is in the second column
+                const gpu = columns[11].trim(); // Assuming GPU information is in the second column
                 if (gpu && !gpuList.includes(gpu)) {
                     gpuList.push(gpu);
                 }
             });
+            print(gpuList);
 
             // Populate the dropdown menu
             const dropdown = document.getElementById('gpu');
