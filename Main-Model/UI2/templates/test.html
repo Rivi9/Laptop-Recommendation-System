@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Dropdown Menu</title>
+</head>
+<body>
+    <h1>Select GPU:</h1>
+    <div class="input-box">
+        <select name="gpu" id="gpu"></select>
+    </div>
+
+    <script>
+        // Function to fetch and process the CSV data
+        async function fetchCSVAndPopulateDropdown() {
+            const response = await fetch('laptops_cleaned.csv');
+            const csvData = await response.text();
+            const gpuList = [];
+
+            // Parse CSV data and extract GPU information
+            csvData.split('\n').forEach(row => {
+                const columns = row.split(',');
+                const gpu = columns[11].trim(); // Assuming GPU information is in the second column
+                if (gpu && !gpuList.includes(gpu)) {
+                    gpuList.push(gpu);
+                }
+            });
+            print(gpuList);
+
+            // Populate the dropdown menu
+            const dropdown = document.getElementById('gpu');
+            gpuList.forEach(gpu => {
+                const option = document.createElement('option');
+                option.textContent = gpu;
+                option.value = gpu;
+                dropdown.appendChild(option);
+            });
+        }
+
+        // Call the function when the page is loaded
+        fetchCSVAndPopulateDropdown();
+    </script>
+</body>
+</html>
