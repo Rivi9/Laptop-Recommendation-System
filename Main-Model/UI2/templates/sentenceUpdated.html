@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Recommendation page 1</title>
+    <link rel="stylesheet" href="static\recommedationStyle.css" />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <form action="">
+        <h1>Recommendation</h1>
+
+        <!-- Input - Budget Range -->
+
+        <div class="input-box">
+          <select required>
+            <option value="" disabled selected>Select Price Range</option>
+            <option value="Less than $500">Less than $500</option>
+            <option value="$500 - $1000">$500 - $1000</option>
+            <option value="$1000 - $1500">$1000 - $1500</option>
+            <option value="More than $1500">More than $1500</option>
+          </select>
+          <box-icon name="lock-alt" type="solid"></box-icon>
+        </div>
+
+        <!-- Input - Sentence -->
+
+        <div class="input-box">
+          <input
+            type="text"
+            placeholder="Type your sentence here"
+            id="sentence"
+          />
+          <box-icon name="lock-alt" type="solid"></box-icon>
+        </div>
+
+        <button type="button" class="btn" onclick="makePrediction()">
+          Recommend
+        </button>
+        <p id="predictionResult"></p>
+
+        <div class="register-link">
+          <p><a href="/page1">Back</a></p>
+        </div>
+      </form>
+    </div>
+
+    <!-- NLP Model -Output -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      function makePrediction() {
+        const sentence = document.getElementById("sentence").value; // Assuming you have an input field with this ID
+        fetch("/predict", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ sentence: sentence }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data); // Debugging: log the response to see its structure
+            // Update the DOM based on the response
+            if (data.method === "Keyword Extraction") {
+              document.getElementById(
+                "predictionResult"
+              ).innerText = `Price: ${data.price}, RAM: ${data.ram}, GPU: ${data.gpu}`;
+            } else if (data.method === "Classification") {
+              document.getElementById(
+                "predictionResult"
+              ).innerText = `Category: ${data.category}, Confidence: ${data.confidence}`;
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
