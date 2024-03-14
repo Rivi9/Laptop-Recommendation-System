@@ -5,18 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>Recommendation page 1</title>
-        <link rel="stylesheet" href="recommedationStyle.css">
+        <link rel="stylesheet" href="../static/css/recommendationStyle.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
 
     <body>
         <div class="wrapper">
-            <form action="">
+            <form action="/sample" method="POST">
                 <h1>Recommendation</h1>
-                <!-- <div class="input-box">
-                    <input type="text" placeholder="Price" required>
-                    <box-icon type='solid' name='user'></box-icon>
-                </div> -->
 
                 <div class="input-box">
                     <select required>
@@ -29,11 +25,6 @@
                     <box-icon name='lock-alt' type='solid'></box-icon>
                 </div>
 
-                <!-- <div class="input-box">
-                    <input type="text" placeholder="RAM" required>
-                    <box-icon name='lock-alt' type='solid' ></box-icon>
-                </div> -->
-
                 <div class="input-box">
                     <select required>
                         <option value="" disabled selected>Occupation 1</option>
@@ -44,11 +35,7 @@
                     </select>
                     <box-icon name='lock-alt' type='solid'></box-icon>
                 </div>
-                
-                <!-- <div class="input-box">
-                    <input type="text" placeholder="GPU" required>
-                    <box-icon name='lock-alt' type='solid' ></box-icon>
-                </div> -->
+
                 <div class="input-box">
                     <select required>
                         <option value="" disabled selected>Occupation 2</option>
@@ -59,11 +46,6 @@
                     </select>
                     <box-icon name='lock-alt' type='solid'></box-icon>
                 </div>
-
-                <!-- <div class="remember-forgot">
-                    <label><input type="checkbox"> Remember me</label>
-                    <a href="#">Forgot password?</a>
-                </div> -->
 
                 <button type="submit" class="btn">Recommend</button>
 

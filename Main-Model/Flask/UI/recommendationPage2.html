@@ -5,17 +5,17 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>Recommendation page 2</title>
-        <link rel="stylesheet" href="recommedationStyle.css">
+        <link rel="stylesheet" href="../static/css/recommendationStyle.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
 
     <body>
         <div class="wrapper">
-            <form id="recommendationForm">
+            <form action="/" method="POST" name="dataform" id="recommendationForm">
                 <h1>Advance Recommendation</h1>
-                
+
                 <div class="input-box">
-                    <select required id="priceRange">
+                    <select name="priceRange" required id="priceRange">
                         <option value="" disabled selected>Select Price Range</option>
                         <option value="Less than $500">Less than $500</option>
                         <option value="$500 - $1000">$500 - $1000</option>
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="input-box">
-                    <select required id="ram">
+                    <select name="ram" required id="ram">
                         <option value="" disabled selected>Select RAM</option>
                         <option value="8GB">8GB</option>
                         <option value="16GB">16GB</option>
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="input-box">
-                    <select required id="gpu">
+                    <select name="gpu" required id="gpu">
                         <option value="" disabled selected>Select GPU</option>
                         <option value="AMD FirePro W4190M">AMD FirePro W4190M</option>
                         <option value="AMD FirePro W4190M ">AMD FirePro W4190M </option>
@@ -229,40 +229,13 @@
                     <box-icon name='lock-alt' type='solid'></box-icon>
                 </div>
 
-                <button type="button" class="btn" onclick="recommend()">Recommend</button>
+                <button name="button" type="submit" class="btn">Recommend</button>
+{#                <button type="button" class="btn" onclick="recommend()">Recommend</button>#}
 
                 <div class="register-link">
                     <p><a href="recommendationPage1.html">Back</a></p>
                 </div>
             </form>
         </div>
-
-        <script>
-            function recommend() {
-                const price = document.getElementById('priceRange').value;
-                const ram = document.getElementById('ram').value;
-                const gpu = document.getElementById('gpu').value;
-        
-                fetch('/recommend', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        price: price,
-                        ram: ram,
-                        gpu: gpu
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    // Handle response from server if needed
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            }
-        </script>
     </body>
 </html>
