@@ -11,7 +11,7 @@ def recommend_laptop():
         gpu = request.form.get("gpu")
 
         jnj(price, ram, gpu)
-        return render_template('../UI/recommendationPage1.html', price=price)
+        return render_template('../', price=price)
 
     # data = request.json
     # price = data['price']
