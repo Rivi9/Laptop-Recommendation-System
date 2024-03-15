@@ -17,10 +17,10 @@
                 <div class="input-box">
                     <select name="priceRange" required id="priceRange">
                         <option value="" disabled selected>Select Price Range</option>
-                        <option value="Less than $500">Less than $500</option>
-                        <option value="$500 - $1000">$500 - $1000</option>
-                        <option value="$1000 - $1500">$1000 - $1500</option>
-                        <option value="More than $1500">More than $1500</option>
+                        <option value="500">Less than $500</option>
+                        <option value="1000">$500 - $1000</option>
+                        <option value="1500">$1000 - $1500</option>
+                        <option value="100000">More than $1500</option>
                     </select>
                     <box-icon name='lock-alt' type='solid'></box-icon>
                 </div>
@@ -28,10 +28,10 @@
                 <div class="input-box">
                     <select name="ram" required id="ram">
                         <option value="" disabled selected>Select RAM</option>
-                        <option value="8GB">8GB</option>
-                        <option value="16GB">16GB</option>
-                        <option value="32GB">32GB</option>
-                        <option value="64GB">64GB</option>
+                        <option value="8">8GB</option>
+                        <option value="16">16GB</option>
+                        <option value="32">32GB</option>
+                        <option value="64">64GB</option>
                     </select>
                 </div>
 
@@ -230,40 +230,11 @@
                 </div>
 
                 <button name="button" type="submit" class="btn">Recommend</button>
-{#                <button type="button" class="btn" onclick="recommend()">Recommend</button>#}
 
                 <div class="register-link">
                     <p><a href="recommendationPage1.html">Back</a></p>
                 </div>
             </form>
         </div>
-
-{#        <script>#}
-{#            function recommend() {#}
-{#                const price = document.getElementById('priceRange').value;#}
-{#                const ram = document.getElementById('ram').value;#}
-{#                const gpu = document.getElementById('gpu').value;#}
-{#                #}
-{#                fetch('/', {#}
-{#                    method: 'POST',#}
-{#                    headers: {#}
-{#                        'Content-Type': 'application/json'#}
-{#                    },#}
-{#                    body: JSON.stringify({#}
-{#                        price: price,#}
-{#                        ram: ram,#}
-{#                        gpu: gpu#}
-{#                    })#}
-{#                })#}
-{#                .then(response => response.json())#}
-{#                .then(data => {#}
-{#                    console.log(data);#}
-{#                    // Handle response from server if needed#}
-{#                })#}
-{#                .catch(error => {#}
-{#                    console.error('Error:', error);#}
-{#                });#}
-{#            }#}
-{#        </script>#}
     </body>
 </html>
