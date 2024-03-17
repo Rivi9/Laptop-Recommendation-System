@@ -57,6 +57,7 @@ def recommend_laptop_dropdown(price, ram, gpu):
     if not filtered_laptops.empty:
         return filtered_laptops.sort_values(by='Price_euros').iloc[0]
         #return filtered_laptops
+    #if there are no results for the given inputs then the system will use the similar GPUs
     else:
         similar_gpus = find_similar_gpu(gpu, gpus_list)
         recommendation = recommend_laptop_nlp(price, ram, gpu, similar_gpus)
