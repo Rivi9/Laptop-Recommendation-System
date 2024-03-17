@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8fec96e0-cf89-4251-af34-7c80cccf2ac4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/DSGP/kk.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Laptop-Recommendation-System.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Laptop-Recommendation-System.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DSGP/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/DSGP/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DSGP/templates/page1Select.html" beforeDir="false" afterPath="$PROJECT_DIR$/DSGP/templates/page1Select.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DSGP/templates/recommendationPage2.html" beforeDir="false" afterPath="$PROJECT_DIR$/DSGP/templates/recommendationPage2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main-Model/Advanced_laptop_recommendation_nlp.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Main-Model/Advanced_laptop_recommendation_nlp.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +97,7 @@
       <workItem from="1710471152231" duration="689000" />
       <workItem from="1710515315265" duration="2567000" />
       <workItem from="1710518626194" duration="1400000" />
+      <workItem from="1710658326051" duration="9402000" />
     </task>
     <servers />
   </component>
@@ -105,7 +105,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Laptop_Recommendation_System$app.coverage" NAME="app Coverage Results" MODIFIED="1710519442605" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DSGP" />
-    <SUITE FILE_PATH="coverage/Laptop_Recommendation_System$kk.coverage" NAME="kk Coverage Results" MODIFIED="1710518858349" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DSGP" />
+    <SUITE FILE_PATH="coverage/Laptop_Recommendation_System$app.coverage" NAME="app Coverage Results" MODIFIED="1710679593958" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DSGP" />
+    <SUITE FILE_PATH="coverage/Laptop_Recommendation_System$kk.coverage" NAME="kk Coverage Results" MODIFIED="1710658721014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DSGP" />
   </component>
 </project>

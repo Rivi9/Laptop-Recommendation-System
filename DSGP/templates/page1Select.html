@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>Select</title>
-        <link rel="stylesheet" href="recommedationStyle.css">
+        <link rel="stylesheet" href="../static/css/recommendationStyle.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <style>
             .btn {
@@ -17,8 +17,13 @@
     <body>
         <div class="wrapper">
             <h1>Get recommendations: </h1>
-            <button onclick="window.location.href='recommendationPage1.html';" class="btn">From Dropdown</button>
-            <button onclick="window.location.href='sentence.html';" class="btn">From Sentence</button>
+            <form action="/select_dropdown" method="POST" name="dataform" id="selectForm">
+                <button onclick="window.location.href='../templates/recommendationPage1.html';" class="btn">From Dropdown</button>
+            </form>
+
+            <form action="/select_sentence" method="POST">
+                <button onclick="window.location.href='../templates/sentence.html';" class="btn">From Sentence</button>
+            </form>
         </div>
     </body>
 </html>
