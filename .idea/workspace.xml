@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fec96e0-cf89-4251-af34-7c80cccf2ac4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSGP/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/DSGP/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSGP/templates/page1Select.html" beforeDir="false" afterPath="$PROJECT_DIR$/DSGP/templates/page1Select.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DSGP/templates/recommendationPage2.html" beforeDir="false" afterPath="$PROJECT_DIR$/DSGP/templates/recommendationPage2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main-Model/Advanced_laptop_recommendation_nlp.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Main-Model/Advanced_laptop_recommendation_nlp.ipynb" afterDir="false" />
-    </list>
+    <list default="true" id="8fec96e0-cf89-4251-af34-7c80cccf2ac4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,7 +91,7 @@
       <workItem from="1710471152231" duration="689000" />
       <workItem from="1710515315265" duration="2567000" />
       <workItem from="1710518626194" duration="1400000" />
-      <workItem from="1710658326051" duration="9402000" />
+      <workItem from="1710658326051" duration="9752000" />
     </task>
     <servers />
   </component>
