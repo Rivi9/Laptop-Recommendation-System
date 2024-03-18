@@ -10,8 +10,15 @@
 <body>
     <h1>Laptop Recommendations</h1>
     <form action="/recommend" method="post">
-        <label for="use">Enter the Workfield:</label>
-        <input type="text" id="use" name="use">
+        <label for="use">Select a Workfield:</label>
+        <select id="use" name="use">
+            <option value="Gaming">Gaming</option>
+            <option value="Student/Education">Student/Education</option>
+            <option value="Basic">IT</option>
+            <option value="Business/Professional">Business/Professional</option>
+            <option value="Creative/Design">Creative/Design</option>
+            <option value="Basic">Basic</option>
+        </select>
         <input type="submit" value="Submit">
     </form>
 </body>
