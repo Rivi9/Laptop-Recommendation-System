@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8fec96e0-cf89-4251-af34-7c80cccf2ac4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main-Model/UI/css/recommedationStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/Main-Model/UI/css/recommedationStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main-Model/UI/page1Select.html" beforeDir="false" afterPath="$PROJECT_DIR$/Main-Model/UI/page1Select.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main-Model/UI/recommendationPage1.html" beforeDir="false" afterPath="$PROJECT_DIR$/Main-Model/UI/recommendationPage1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main-Model/UI/recommendationPage2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Main-Model/UI/recommendationPage2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main-Model/UI/sentence.html" beforeDir="false" afterPath="$PROJECT_DIR$/Main-Model/UI/sentence.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +48,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Main-Model&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/yeran/Desktop/cw ood/cw/DSGP/Laptop-Recommendation-System&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/iit/2nd year/2nd sem/DSGP/local/Laptop-Recommendation-System&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -102,6 +97,7 @@
       <workItem from="1710658326051" duration="9752000" />
       <workItem from="1710680314065" duration="7942000" />
       <workItem from="1710732850774" duration="2166000" />
+      <workItem from="1710736811468" duration="196000" />
     </task>
     <servers />
   </component>
@@ -109,7 +105,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Laptop_Recommendation_System$app.coverage" NAME="app Coverage Results" MODIFIED="1710733038040" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DSGP" />
-    <SUITE FILE_PATH="coverage/Laptop_Recommendation_System$kk.coverage" NAME="kk Coverage Results" MODIFIED="1710733028262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DSGP" />
+    <SUITE FILE_PATH="coverage/Laptop_Recommendation_System$app.coverage" NAME="app Coverage Results" MODIFIED="1710736865514" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DSGP" />
+    <SUITE FILE_PATH="coverage/Laptop_Recommendation_System$kk.coverage" NAME="kk Coverage Results" MODIFIED="1710736859710" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DSGP" />
   </component>
 </project>
