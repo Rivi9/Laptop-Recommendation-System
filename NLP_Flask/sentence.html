@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Recommendation page 1</title>
+    <link rel="stylesheet" href="../static/css/recommendationStyle.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <form action="">
+        <h1>Recommendation</h1>
+
+        <div class="input-box">
+          <select required name="priceRange">
+            <option value="" disabled selected>Select Price Range</option>
+            <option value="Less than $500">Less than $500</option>
+            <option value="$500 - $1000">$500 - $1000</option>
+            <option value="$1000 - $1500">$1000 - $1500</option>
+            <option value="More than $1500">More than $1500</option>
+          </select>
+
+          <box-icon name="lock-alt" type="solid"></box-icon>
+        </div>
+
+        <div class="input-box">
+          <input
+            type="text"
+            placeholder="Type your sentence here"
+            id="sentence"
+          />
+          <box-icon name="lock-alt" type="solid"></box-icon>
+        </div>
+
+        <!-- <button type="submit" class="btn">Recommend</button> -->
+
+        <button type="button" class="btn" onclick="makePrediction()">
+          Recommend
+        </button>
+        <p id="predictionResult"></p>
+
+        <div class="register-link">
+          <p><a href="/page1">Back</a></p>
+        </div>
+      </form>
+    </div>
+
+    <!-- NLP Model -Output -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      function makePrediction() {
+        const sentence = document.getElementById("sentence").value;
+        const priceRange = document.querySelector(
+          'select[name="priceRange"]'
+        ).value; // Get the selected price range
+        fetch("/predict", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ sentence: sentence, priceRange: priceRange }), // include the price range in the request
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data); // For debugging
+            let resultText = "";
+
+            if (data.method === "Keyword Extraction") {
+              resultText += `Price: ${data.price || "N/A"}, RAM: ${
+                data.ram || "N/A"
+              }, GPU: ${data.gpu || "N/A"}\n`;
+            } else if (data.method === "Classification") {
+              resultText += `Category: ${data.category}, Confidence: ${data.confidence}\n`;
+            }
+
+            // Check if there are recommendations and add them to the resultText
+            if (data.recommendations && data.recommendations.length > 0) {
+              resultText +=
+                "Recommendations:\n" + data.recommendations.join(", ");
+            } else {
+              resultText += "No recommendations available.";
+            }
+
+            document.getElementById("predictionResult").innerText = resultText;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>

@@ -22,7 +22,7 @@ def recommend(use):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('recommendationPage1.html')
 
 @app.route('/recommend', methods=['POST'])
 def get_recommendations():
@@ -32,3 +32,6 @@ def get_recommendations():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+#Flask API Code

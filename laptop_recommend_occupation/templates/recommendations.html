@@ -9,11 +9,18 @@
 
 <body>
     <h1>Recommended Laptops</h1>
-    <ul>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
         {% for laptop in recommendations %}
-        <li>{{ laptop.name }} - Rs. {{ laptop.price }}</li>
+        <tr>
+            <td>{{ laptop.name }}</td>
+            <td>{{ laptop.price }}</td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
 </body>
 
 </html>
