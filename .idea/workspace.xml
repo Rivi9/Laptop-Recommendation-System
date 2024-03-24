@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8fec96e0-cf89-4251-af34-7c80cccf2ac4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="8fec96e0-cf89-4251-af34-7c80cccf2ac4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,7 +46,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Main-Model&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/iit/2nd year/2nd sem/DSGP/local/Laptop-Recommendation-System&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/yeran/.anaconda/anaconda3/condabin/conda.bat&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -66,7 +64,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.12 (DSGP)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DSGP" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -98,6 +95,9 @@
       <workItem from="1710680314065" duration="7942000" />
       <workItem from="1710732850774" duration="2166000" />
       <workItem from="1710736811468" duration="196000" />
+      <workItem from="1711212327466" duration="639000" />
+      <workItem from="1711214067103" duration="1736000" />
+      <workItem from="1711251435458" duration="13462000" />
     </task>
     <servers />
   </component>
