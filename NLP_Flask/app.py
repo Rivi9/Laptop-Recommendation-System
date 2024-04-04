@@ -1,74 +1,21 @@
 from flask import Flask, render_template, request, jsonify
 import pandas as pd
-import difflib
+import numpy as np
 import spacy
 import fasttext
+import pickle
 import re
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from nltk.stem import PorterStemmer
 
 app = Flask(__name__)
+
 laptops = pd.read_csv("LaptopsNew.csv")
 
-# Mapping between predicted categories and dataset use cases
-category_mapping = {
-    "student_education": "student_education",
-    "gaming": "gaming",
-    "basic": "basic",
-    "it": "it",
-    "business_professional": "business_professional",
-    "creative_design": "creative_design"
-}
-
-# price range mappings
-price_range_mappings = {
-    "Less than $500": (None, 500),
-    "$500 - $1000": (500, 1000),
-    "$1000 - $1500": (1000, 1500),
-    "More than $1500": (1500, None),
-}
-
-
-# Preprocessing function
-def preprocess_data():
-    laptops.dropna(inplace=True)
-    
-    laptops['processor'] = laptops['processor'].apply(lambda x: x.split())
-    laptops['os'] = laptops['os'].apply(lambda x: x.split())
-    laptops['ram'] = laptops['ram'].astype(str)  # Converting to string for concatenation
-    laptops['use'] = laptops['usecases'].apply(lambda x: x.split() if isinstance(x, str) else [])
-    laptops['tags'] = laptops.apply(lambda x: x['processor'] + [x['ram']] + x['os'] + x['use'], axis=1)
-    
-    new = laptops.drop(columns=['processor', 'ram', 'os', 'storage', 'rating', 'os_brand', 'processor_brand', 'use'])
-    new['tags'] = new['tags'].apply(lambda x: " ".join(x)).apply(lambda x: x.lower())
-    
-    ps = PorterStemmer()
-    new['tags'] = new['tags'].apply(lambda x: " ".join([ps.stem(i) for i in x.split()]))
-    
-    cv = CountVectorizer(max_features=5000, stop_words='english')
-    vector = cv.fit_transform(new['tags']).toarray()
-    
-    similarity = cosine_similarity(vector)
-    
-    return new, similarity
-
-new, similarity = preprocess_data()
-
-# Recommendation function
-def recommend(use):
-    mapped_use = category_mapping.get(use, use)  # Apply category mapping
-
-    try:
-        index = new[new['usecases'].str.lower() == mapped_use.lower()].index[0]
-        distances = sorted(list(enumerate(similarity[index])), reverse=True, key=lambda x: x[1])
-        recommended_names = [new.iloc[i[0]]['name'] for i in distances[1:6]]
-        return recommended_names
-    except IndexError:
-        return ["No recommendations found for this use case"]
-
+# Load the Word2Vec model
+new = pickle.load(open('dataframe.pkl', 'rb'))
+word2vec_similarity = pickle.load(open('word2vec_similarity.pkl', 'rb'))
 
 # Load spaCy model for keyword extraction
 nlp = spacy.load("en_core_web_lg")
@@ -79,8 +26,46 @@ model = fasttext.load_model("input_classificationNew.bin")
 # Set of stopwords
 stop_words = set(stopwords.words('english'))
 
+# Mapping between predicted categories and dataset use cases
+category_mapping = {
+    "student_education": "Student/Education",
+    "gaming": "Gaming",
+    "basic": "Basic",
+    "it": "IT",
+    "business_professional": "Business/Professional",
+    "creative_design": "Creative/Design"
+}
+
+# Define price range mappings
+price_range_mappings = {
+    "Less than $500": (None, 30000),
+    "$500 - $1000": (30000, 50000),
+    "$1000 - $1500": (50000, 75000),
+    "More than $1500": (75000, None),
+}
+
+# Recommendation function
+def recommend(use):
+    mapped_use = category_mapping.get(use, use)  # Apply category mapping
+
+    # Check if the use case exists in the dataframe
+    if mapped_use not in new['usecases'].values:
+        return "Use case not found. Please try a different one."
+
+    index = new[new['usecases'] == mapped_use].index[0]
+    distances = sorted(list(enumerate(word2vec_similarity[index])), reverse=True, key=lambda x: x[1])
+    recommended_laptops = []
+    for i in distances[1:10]:  # top 10 recommendations
+        row_index = i[0]
+        name = new.iloc[row_index]['name']
+        price = new.iloc[row_index]['price']
+        img_link = new.iloc[row_index]['img_link']
+        recommended_laptops.append({'name': name, 'price': price, 'img_link': img_link})
+    return recommended_laptops
+
+
 def preprocess_text(text):
-    """Preprocess the text using spaCy to extract keywords."""
+    # Preprocess the text using spaCy to extract keywords.
     doc = nlp(text)
     price, ram, gpu = None, None, None
     words_between = []
@@ -103,7 +88,7 @@ def preprocess_text(text):
     return price, ram, gpu
 
 def preprocess_with_stemming(text):
-    """Preprocess text for classification with stemming."""
+    # Preprocess text for classification
     text = re.sub(r'[^\w\s]', '', text).lower()
     text = re.sub(' +', ' ', text)
     word_tokens = word_tokenize(text)
@@ -111,7 +96,7 @@ def preprocess_with_stemming(text):
     return ' '.join(filtered_text)
 
 def predict_category(sentence):
-    """Predict the category using the FastText model."""
+    # Predict the category using the FastText model
     preprocessed_sentence = preprocess_with_stemming(sentence)
     prediction = model.predict(preprocessed_sentence)
     # Remove the "__label__" prefix and convert the category to lowercase
@@ -121,36 +106,54 @@ def predict_category(sentence):
 
 def filter_laptops(price=None, ram=None, gpu=None, priceRange=None):
     filtered_df = laptops.copy()
-    
-    if priceRange in price_range_mappings:
-        min_price, max_price = price_range_mappings[priceRange]
-        if min_price is not None:
-            filtered_df = filtered_df[filtered_df['price'] >= min_price]
-        if max_price is not None:
-            filtered_df = filtered_df[filtered_df['price'] <= max_price]
 
-
-    if price is not None:
-        filtered_df = filtered_df[filtered_df['price'] <= price]
+    # Filter by price range if selected
+    if priceRange:
+        range_min, range_max = price_range_mappings.get(priceRange, (None, None))
+        if range_min is not None:
+            filtered_df = filtered_df[filtered_df['price'] >= range_min]
+        if range_max is not None:
+            filtered_df = filtered_df[filtered_df['price'] <= range_max]
+    else:
+        # Filter by specified price if no price range selected
+        if price is not None:
+            filtered_df = filtered_df[filtered_df['price'] <= price]
 
     if ram is not None:
         ram_value = int(ram.replace("GB", ""))  # Convert input to integer
         filtered_df = filtered_df[filtered_df['ram'].astype(int) >= ram_value]
-    
+
     if gpu is not None:
-        filtered_df = filtered_df[filtered_df['processor'].apply(lambda x: gpu.lower() in " ".join(x).lower())]
-    
+        filtered_df = filtered_df[filtered_df['processor'].apply(lambda x: gpu.lower() in x.lower())]
+
     return filtered_df
 
-
-
 def recommend_based_on_filter(filtered_df):
-    # Sort by price or any other preferred metric
-    sorted_df = filtered_df.sort_values(by='price', ascending=True)
-    # Select the top 5 recommendations
-    recommendations = sorted_df.head(5)['name'].tolist()
-    return recommendations
+    
+    recommendations = []
+    for _, row in filtered_df.iterrows():
+        name = row['name']
+        price = row['price']
+        img_link = row['img_link'] 
+        recommendations.append({'name': name, 'price': price, 'img_link': img_link})
+        if len(recommendations) == 5:  # top 5 recommendations
+            break
 
+    return recommendations
+        
+def convert_numpy(obj):
+    if isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, list):
+        return [convert_numpy(item) for item in obj]
+    elif isinstance(obj, dict):
+        return {key: convert_numpy(value) for key, value in obj.items()}
+    else:
+        return obj
 
 @app.route('/', methods=['GET', 'POST'])
 def start():
@@ -174,29 +177,37 @@ def predict():
     sentence = data['sentence']
     priceRange = data.get('priceRange', None)  # Extract price range from the request
 
-
     # Extract keywords first
     price, ram, gpu = preprocess_text(sentence)
     recommendations = []  # Initialize recommendations list
 
-    # Attempt to use extracted keywords or category for recommendations
+    # extracted keywords for recommendation
     if any([price, ram, gpu]):
-        # If specific keywords were found, use them for recommendations
+        # If specific keywords were found - use keywords for recommendations
         filtered_df = filter_laptops(price=price, ram=ram, gpu=gpu, priceRange=priceRange)
-        # Proceed to generate recommendations based on filtered_df
-        # This part needs to be adapted based on how you want to recommend based on filtered data
         recommendations = recommend_based_on_filter(filtered_df)
-
-       
+   
     else:
-        # No specific keywords, use the classification model
+        # No specific keywords - use the classification model
         category, confidence = predict_category(sentence)
-        filtered_df = filter_laptops(priceRange=priceRange)  # Filter based on price range
-        temp_recommendations = recommend(category)
-        # Filter the recommendations further based on the price range
-        filtered_recommendations = filtered_df[filtered_df['name'].isin(temp_recommendations)]
-        recommendations = recommend_based_on_filter(filtered_recommendations)
-        
+ 
+        # Initially get recommendations without considering the price range
+        initial_recommendations = recommend(category)
+
+        # Filter recommendations based on the selected price range
+        if priceRange:
+            range_min, range_max = price_range_mappings.get(priceRange, (None, None))
+            filtered_recommendations = []
+            for rec in initial_recommendations:
+                if range_min is not None and rec['price'] < range_min:
+                    continue  
+                if range_max is not None and rec['price'] > range_max:
+                    continue  
+                filtered_recommendations.append(rec)
+            recommendations = filtered_recommendations
+        else:
+            recommendations = initial_recommendations
+
 
     response = {
         'method': 'Classification' if not any([price, ram, gpu]) else 'Keyword Extraction',
@@ -208,6 +219,7 @@ def predict():
         'recommendations': recommendations
     }
 
+    response = convert_numpy(response)  # Convert numpy types to native Python types
     return jsonify(response)
 
 if __name__ == '__main__':
