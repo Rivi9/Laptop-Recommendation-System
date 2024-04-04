@@ -26,7 +26,8 @@ def advance_rec_drop():
         ram = request.form.get("ram")
         gpu = request.form.get("gpu")
         advance_rec_dropdown(price, ram, gpu)
-        return render_template('recommendationPage2.html', price=price)
+        recommendation = advance_rec_dropdown(price, ram, gpu)
+        return render_template('recommendations2.html', recommendation=recommendation)
 
 
 

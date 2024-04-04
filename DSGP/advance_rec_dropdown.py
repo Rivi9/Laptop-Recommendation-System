@@ -5,7 +5,25 @@ laptops_df = pd.read_csv("laptops_cleaned.csv")
 
 def advance_rec_dropdown(price, ram, gpu):
     recommendation = recommend_laptop_dropdown(price, ram, gpu)
+    recommendation = pd.DataFrame(recommendation)
+    # if recommendation is None:
+    #     return None
+    # else:
     print(recommendation)
+    recommended_laptops = []
+
+    length = 10
+    if recommendation.shape[0] < 10:
+        length = recommendation.shape[0]
+    for i in range(length):
+        company = recommendation.iloc[i, recommendation.columns.get_loc('Company')]
+        product = recommendation.iloc[i, recommendation.columns.get_loc('Product')]
+        ram = recommendation.iloc[i, recommendation.columns.get_loc('Ram')]
+        gpu = recommendation.iloc[i, recommendation.columns.get_loc('Gpu')]
+        price = recommendation.iloc[i, recommendation.columns.get_loc('Price_euros')]
+        recommended_laptops.append({'Company': company, 'Product': product, 'Ram': ram, 'Gpu': gpu, 'Price': price})
+    return recommended_laptops
+
 
 def recommend_laptop_dropdown(price, ram, gpu):
     price = float(price)
@@ -84,4 +102,4 @@ def recommend_laptop_nlp(price, ram, gpu, similar_gpus):
         #return filtered_laptops.sort_values(by='Price_euros')
         #return filtered_laptops
     else:
-        return "No laptops match the specified criteria."
+        return None

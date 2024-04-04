@@ -88,17 +88,21 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Company</th>
+                        <th>Product</th>
+                        <th>Ram</th>
+                        <th>Gpu</th>
                         <th>Price ($)</th>
-                        <th>Image</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for laptop in recommendations %}
+                    {% for laptop in recommendation %}
                     <tr>
-                        <td>{{ laptop.name }}</td>
-                        <td>{{ laptop.price }}</td>
-                        <td><img src="{{ laptop.img_link }}" alt="{{ laptop.name }}"></td>
+                        <td>{{ laptop['Company'] }}</td>
+                        <td>{{ laptop['Product'] }}</td>
+                        <td>{{ laptop['Ram'] }}</td>
+                        <td>{{ laptop['Gpu'] }}</td>
+                        <td>{{ laptop['Price'] }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
