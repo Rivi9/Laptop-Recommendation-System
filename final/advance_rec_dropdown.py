@@ -20,7 +20,7 @@ def advance_rec_dropdown(price, ram, gpu):
         product = recommendation.iloc[i, recommendation.columns.get_loc('Product')]
         ram = recommendation.iloc[i, recommendation.columns.get_loc('Ram')]
         gpu = recommendation.iloc[i, recommendation.columns.get_loc('Gpu')]
-        price = recommendation.iloc[i, recommendation.columns.get_loc('Price_euros')]
+        price = recommendation.iloc[i, recommendation.columns.get_loc('Price')]
         recommended_laptops.append({'Company': company, 'Product': product, 'Ram': ram, 'Gpu': gpu, 'Price': price})
     return recommended_laptops
 
@@ -32,7 +32,7 @@ def recommend_laptop_dropdown(price, ram, gpu):
     # Filter laptops based on user input
     filtered_laptops = laptops_df
     if price:
-        filtered_laptops = filtered_laptops[filtered_laptops['Price_euros'] <= price]
+        filtered_laptops = filtered_laptops[filtered_laptops['Price'] <= price]
     if ram:
         filtered_laptops = filtered_laptops[filtered_laptops['Ram'] >= ram]
     if gpu:
@@ -41,7 +41,7 @@ def recommend_laptop_dropdown(price, ram, gpu):
     #print(len(filtered_laptops))
     # Sort laptops by price and return the top recommendation
     if not filtered_laptops.empty:
-        return filtered_laptops.sort_values(by='Price_euros')
+        return filtered_laptops.sort_values(by='Price')
         #return filtered_laptops
     #if there are no results for the given inputs then the system will use the similar GPUs
     else:
@@ -79,7 +79,7 @@ def recommend_laptop_nlp(price, ram, gpu, similar_gpus):
     # Filter laptops based on user input
     filtered_laptops = laptops_df
     if price:
-        filtered_laptops = filtered_laptops[filtered_laptops['Price_euros'] <= price]
+        filtered_laptops = filtered_laptops[filtered_laptops['Price'] <= price]
     if ram:
         filtered_laptops = filtered_laptops[filtered_laptops['Ram'] >= ram]
     if gpu:
@@ -98,8 +98,8 @@ def recommend_laptop_nlp(price, ram, gpu, similar_gpus):
     # Sort laptops by price and return the top recommendation
     if not filtered_laptops.empty:
         print(len(filtered_laptops))
-        return filtered_laptops.sort_values(by='Price_euros')
-        #return filtered_laptops.sort_values(by='Price_euros')
+        return filtered_laptops.sort_values(by='Price')
+        #return filtered_laptops.sort_values(by='Price')
         #return filtered_laptops
     else:
         return None
