@@ -51,9 +51,13 @@
       </form>
     </div>
 
+    <!-- Place this within the body, where you'd like the recommendation cards to appear -->
+    <div id="recommendationCards" class="recommendation-cards-container"></div>
+
     <!-- NLP Model -Output -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
       function makePrediction() {
         const sentence = document.getElementById("sentence").value;
@@ -75,20 +79,29 @@
             if (data.method === "Keyword Extraction") {
               resultText += `Price: ${data.price || "N/A"}, RAM: ${
                 data.ram || "N/A"
-              }, GPU: ${data.gpu || "N/A"}\n`;
+              }, GPU: ${data.gpu || "N/A"}<br>`;
             } else if (data.method === "Classification") {
-              resultText += `Category: ${data.category}, Confidence: ${data.confidence}\n`;
+              resultText += `Category: ${data.category}, Confidence: ${data.confidence}<br>`;
             }
 
-            // Check if there are recommendations and add them to the resultText
+            // Clear previous recommendations
+            $("#predictionResult").html(resultText);
+
+            // Check if there are recommendations
             if (data.recommendations && data.recommendations.length > 0) {
-              resultText +=
-                "Recommendations:\n" + data.recommendations.join(", ");
+              data.recommendations.forEach((laptop) => {
+                const laptopHtml = `
+              <div class="laptop">
+                <img src="${laptop.img_link}" alt="${laptop.name}">
+                <h3>${laptop.name}</h3>
+                <p>Price: ${laptop.price}</p>
+              </div>
+            `;
+                $("#predictionResult").append(laptopHtml);
+              });
             } else {
-              resultText += "No recommendations available.";
+              $("#predictionResult").append("No recommendations available.");
             }
-
-            document.getElementById("predictionResult").innerText = resultText;
           })
           .catch((error) => {
             console.error("Error:", error);
