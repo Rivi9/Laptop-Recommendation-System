@@ -8,10 +8,11 @@ import re
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from sklearn.metrics.pairwise import cosine_similarity
+import difflib
 
 app = Flask(__name__)
 
-laptops = pd.read_csv("LaptopsNew.csv")
+laptops_nlp = pd.read_csv("laptops_cleaned.csv")
 
 # Load the Word2Vec model
 new = pickle.load(open('dataframe.pkl', 'rb'))
@@ -38,11 +39,12 @@ category_mapping = {
 
 # Define price range mappings
 price_range_mappings = {
-    "Less than $500": (None, 30000),
-    "$500 - $1000": (30000, 50000),
-    "$1000 - $1500": (50000, 75000),
-    "More than $1500": (75000, None),
+    "Less than $500": (None, 500),
+    "$500 - $1000": (500, 1000),
+    "$1000 - $1500": (1000, 1500),
+    "More than $1500": (1500, None),
 }
+
 
 # Recommendation function
 def recommend(use):
@@ -105,37 +107,40 @@ def predict_category(sentence):
     return category, confidence
 
 def filter_laptops(price=None, ram=None, gpu=None, priceRange=None):
-    filtered_df = laptops.copy()
+    filtered_df = laptops_nlp.copy()
 
     # Filter by price range if selected
     if priceRange:
         range_min, range_max = price_range_mappings.get(priceRange, (None, None))
         if range_min is not None:
-            filtered_df = filtered_df[filtered_df['price'] >= range_min]
+            filtered_df = filtered_df[filtered_df['Price'] >= range_min]
         if range_max is not None:
-            filtered_df = filtered_df[filtered_df['price'] <= range_max]
+            filtered_df = filtered_df[filtered_df['Price'] <= range_max]
     else:
         # Filter by specified price if no price range selected
         if price is not None:
-            filtered_df = filtered_df[filtered_df['price'] <= price]
+            filtered_df = filtered_df[filtered_df['Price'] <= price]
 
     if ram is not None:
         ram_value = int(ram.replace("GB", ""))  # Convert input to integer
-        filtered_df = filtered_df[filtered_df['ram'].astype(int) >= ram_value]
+        filtered_df = filtered_df[filtered_df['Ram'].astype(int) >= ram_value]
+        
 
     if gpu is not None:
         filtered_df = filtered_df[filtered_df['processor'].apply(lambda x: gpu.lower() in x.lower())]
-
+        
     return filtered_df
 
 def recommend_based_on_filter(filtered_df):
     
     recommendations = []
     for _, row in filtered_df.iterrows():
-        name = row['name']
-        price = row['price']
-        img_link = row['img_link'] 
-        recommendations.append({'name': name, 'price': price, 'img_link': img_link})
+        company = row['Company']
+        name = row['Product']
+        gpu = row['Gpu']
+        ram = row['Ram'] 
+        price = row['Price']
+        recommendations.append({'Company': company, 'Product': name, 'Gpu': gpu, 'Ram': ram, 'Price': price})
         if len(recommendations) == 5:  # top 5 recommendations
             break
 
