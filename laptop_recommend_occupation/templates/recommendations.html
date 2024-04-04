@@ -5,22 +5,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laptop Recommendations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('../static/img/andras-vas-Bd7gNnWJBkU-unsplash\ 1.png') no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .glass-effect {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .no-laptops-msg {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .other-laptops-msg {
+            color: blue;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Recommended Laptops</h1>
-    <table border="1">
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-        </tr>
-        {% for laptop in recommendations %}
-        <tr>
-            <td>{{ laptop.name }}</td>
-            <td>{{ laptop.price }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="container">
+        <h1>Recommended Laptops</h1>
+        <div class="glass-effect">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for laptop in recommendations %}
+                    <tr>
+                        <td>{{ laptop.name }}</td>
+                        <td>{{ laptop.price }}</td>
+                        <td><img src="{{ laptop.img_link }}" alt="{{ laptop.name }}"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 
 </html>

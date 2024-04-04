@@ -17,7 +17,8 @@ def recommend(use):
         row_index = i[0]
         name = new.iloc[row_index]['name']
         price = new.iloc[row_index]['price']
-        recommended_laptops.append({'name': name, 'price': price})
+        img_link = new.iloc[row_index]['img_link']
+        recommended_laptops.append({'name': name, 'price': price, 'img_link': img_link})
     return recommended_laptops
 
 @app.route('/')
