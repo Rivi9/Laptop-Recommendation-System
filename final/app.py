@@ -30,7 +30,6 @@ def advance_rec_drop():
         return render_template('recommendations2.html', recommendation=recommendation)
 
 
-
 @app.route('/backToRecPage1', methods=['GET', 'POST'])
 def backToRecPage1():
     return render_template('recommendationPage1.html')
@@ -44,13 +43,14 @@ def recommend(use):
     index = new[new['usecases'] == use].index[0]
     distances = sorted(list(enumerate(word2vec_similarity[index])), reverse=True, key=lambda x: x[1])
     recommended_laptops = []
-    for i in distances[1:10]:
+    for i in distances[1:1000]:
         row_index = i[0]
         name = new.iloc[row_index]['name']
         price = new.iloc[row_index]['price']
         img_link = new.iloc[row_index]['img_link']
         recommended_laptops.append({'name': name, 'price': price, 'img_link': img_link})
     return recommended_laptops
+
 
 @app.route('/toRecPage2', methods=['GET', 'POST'])
 def backToRecPage2():
@@ -63,7 +63,29 @@ def backToSelectPage():
 @app.route('/recommend', methods=['POST'])
 def get_recommendations():
     use = request.form['use']
-    recommendations = recommend(use)
+    priceRange = request.form.get('priceRange', None)  # Extract price range from the request
+
+    recommendations = []  # Initialize recommendations list
+    
+    # Initially get recommendations without considering the price range
+    initial_recommendations = recommend(use)
+
+    # Filter recommendations based on the selected price range
+    if priceRange:
+        range_min, range_max = price_range_mappings.get(priceRange, (None, None))
+        filtered_recommendations = []
+        for rec in initial_recommendations:
+            if range_min is not None and rec['price'] < range_min:
+                continue  
+            if range_max is not None and rec['price'] > range_max:
+                continue  
+            filtered_recommendations.append(rec)
+            if len(filtered_recommendations) == 10:  # Break after adding the 10th recommendation
+                break
+        recommendations = filtered_recommendations
+    else:
+        recommendations = initial_recommendations[:10]
+        
     return render_template('recommendations.html', recommendations=recommendations)
 
 
