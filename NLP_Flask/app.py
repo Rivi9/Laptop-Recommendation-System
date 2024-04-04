@@ -57,7 +57,7 @@ def recommend(use):
     index = new[new['usecases'] == mapped_use].index[0]
     distances = sorted(list(enumerate(word2vec_similarity[index])), reverse=True, key=lambda x: x[1])
     recommended_laptops = []
-    for i in distances[1:10]:  # top 10 recommendations
+    for i in distances[1:1000]:  # top 10 recommendations
         row_index = i[0]
         name = new.iloc[row_index]['name']
         price = new.iloc[row_index]['price']
@@ -141,7 +141,7 @@ def recommend_based_on_filter(filtered_df):
         ram = row['Ram'] 
         price = row['Price']
         recommendations.append({'Company': company, 'Product': name, 'Gpu': gpu, 'Ram': ram, 'Price': price})
-        if len(recommendations) == 5:  # top 5 recommendations
+        if len(recommendations) == 10:  # top 10 recommendations
             break
 
     return recommendations
@@ -209,9 +209,11 @@ def predict():
                 if range_max is not None and rec['price'] > range_max:
                     continue  
                 filtered_recommendations.append(rec)
+                if len(filtered_recommendations) == 10:  # Break after adding the 10th recommendation
+                    break
             recommendations = filtered_recommendations
         else:
-            recommendations = initial_recommendations
+            recommendations = initial_recommendations[:10]
 
 
     response = {
