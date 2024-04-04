@@ -11,7 +11,7 @@ def start():
 
 @app.route('/select_dropdown', methods=['POST'])
 def select_dropdown():
-    return render_template('recommendationPage2.html')
+    return render_template('recommendationPage1.html')
 
 @app.route('/select_sentence', methods=['POST'])
 def select_sentence():
@@ -27,12 +27,18 @@ def advance_rec_drop():
         return render_template('recommendationPage2.html', price=price)
 
 
-@app.route('/sample', methods=['GET', 'POST'])
-def sample_fun():
-    if request.method == 'POST':
-        print("hello world")
 
+@app.route('/backToRecPage1', methods=['GET', 'POST'])
+def backToRecPage1():
     return render_template('recommendationPage1.html')
+
+@app.route('/toRecPage2', methods=['GET', 'POST'])
+def backToRecPage2():
+    return render_template('recommendationPage2.html')
+
+@app.route('/backToSelectPage', methods=['GET', 'POST'])
+def backToSelectPage():
+    return render_template('page1Select.html')
 
 
 def advance_rec_dropdown(price, ram, gpu):

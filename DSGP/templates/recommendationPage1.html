@@ -67,11 +67,15 @@
 
                 <button type="submit" class="btn">Recommend</button>
 
-                <div class="register-link">
-                    <p><a href="recommendationPage2.html">Advance Recommendation?</a></p><br>
-                    <p><a href="page1Select.html">Back</a></p>
-                </div>
             </form>
+
+            <form action="/toRecPage2" method="POST" name="dataform" id="selectForm">
+               <center><button class="back" type="submit" style="background-color: transparent; font-weight: bold;border-color: transparent;">Advance Recommendation?</button></center>
+            </form>
+            <form action="/backToSelectPage" method="POST" name="dataform" id="selectForm">
+               <center><button class="back" type="submit" style="background-color: transparent; font-weight: bold;border-color: transparent;">Back</button></center>
+            </form>
+
         </div>
     </body>
 </html>
