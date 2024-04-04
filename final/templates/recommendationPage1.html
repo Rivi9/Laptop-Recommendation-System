@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Recommendation page 1</title>
+        <link rel="stylesheet" href="../static/css/recommendationStyle.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <form action="/recommend" method="POST">
+                <h1>Recommendation</h1>
+                <div class="input-box">
+                    <select required>
+                        <option value="" disabled selected>Select Price Range</option>
+                        <option value="Less than $500">Less than $500</option>
+                        <option value="$500 - $1000">$500 - $1000</option>
+                        <option value="$1000 - $1500">$1000 - $1500</option>
+                        <option value="More than $1500">More than $1500</option>
+                    </select>
+                    <box-icon name='lock-alt' type='solid'></box-icon>
+                </div>
+
+                <div class="input-box">
+
+                        <select id="use" name="use" required>
+                            <option value="" disabled selected>Occupation</option>
+                            <option value="Gaming">Gaming</option>
+                            <option value="Student/Education">Student/Education</option>
+                            <option value="Basic">IT</option>
+                            <option value="Business/Professional">Business/Professional</option>
+                            <option value="Creative/Design">Creative/Design</option>
+                            <option value="Basic">Basic</option>
+                        </select>
+                </div>
+
+                <button type="submit" class="btn">Recommend</button>
+
+            </form>
+
+            <form action="/toRecPage2" method="POST" name="dataform">
+               <center><button class="back" type="submit" style="background-color: transparent; font-weight: bold;border-color: transparent;">Advanced Recommendation?</button></center>
+            </form>
+            <form action="/backToSelectPage" method="POST" name="dataform">
+               <center><button class="back" type="submit" style="background-color: transparent; font-weight: bold;border-color: transparent;">Back</button></center>
+            </form>
+
+        </div>
+    </body>
+</html>
