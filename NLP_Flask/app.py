@@ -12,7 +12,7 @@ import difflib
 
 app = Flask(__name__)
 
-laptops_nlp = pd.read_csv("laptops_cleaned.csv")
+laptops_df = pd.read_csv("laptops_cleaned.csv")
 
 # Load the Word2Vec model
 new = pickle.load(open('dataframe.pkl', 'rb'))
@@ -107,7 +107,7 @@ def predict_category(sentence):
     return category, confidence
 
 def filter_laptops(price=None, ram=None, gpu=None, priceRange=None):
-    filtered_df = laptops_nlp.copy()
+    filtered_df = laptops_df.copy()
 
     # Filter by price range if selected
     if priceRange:
