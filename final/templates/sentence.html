@@ -51,8 +51,7 @@
       </form>
     </div>
 
-    <!-- The recommendation cards -->
-
+    <!-- Place this within the body, where you'd like the recommendation cards to appear -->
     <div id="recommendationCards" class="recommendation-cards-container"></div>
 
     <!-- NLP Model -Output -->
@@ -64,89 +63,45 @@
         const sentence = document.getElementById("sentence").value;
         const priceRange = document.querySelector(
           'select[name="priceRange"]'
-        ).value;
-
+        ).value; // Get the selected price range
         fetch("/predict", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ sentence: sentence, priceRange: priceRange }),
+          body: JSON.stringify({ sentence: sentence, priceRange: priceRange }), // include the price range in the request
         })
           .then((response) => response.json())
-
           .then((data) => {
-            console.log(data);
+            console.log(data); // For debugging
+            let resultText = "";
 
-            // Initialize an empty string for the HTML content
-            let contentHtml = "";
-
-            // Check if the recommendations array is empty
-            if (data.recommendations.length === 0) {
-              contentHtml =
-                "<p>No recommendations found based on your criteria. Please try different options.</p>";
-            } else {
-              // If recommendations are found, display them as a table
-
-              // Check for "Keyword Extraction" method
-              if (data.method === "Keyword Extraction") {
-                contentHtml = `
-      <table>
-        <thead>
-          <tr>
-            <th>Company</th>
-            <th>Product</th>
-            <th>Ram</th>
-            <th>Gpu</th>
-            <th>Price ($)</th>
-          </tr>
-        </thead>
-        <tbody>`;
-
-                data.recommendations.forEach((laptop) => {
-                  contentHtml += `
-        <tr>
-          <td>${laptop.Company}</td>
-          <td>${laptop.Product}</td>
-          <td>${laptop.Ram}</td>
-          <td>${laptop.Gpu}</td>
-          <td>${laptop.Price}</td>
-        </tr>
-        `;
-                });
-
-                contentHtml += `</tbody></table>`;
-              }
-              // Check for "Classification" method
-              else if (data.method === "Classification") {
-                contentHtml = `
-      <table>
-        <thead>
-          <tr>
-          <th>Laptop</th>
-          <th>Product</th>
-          <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>`;
-
-                data.recommendations.forEach((category) => {
-                  contentHtml += `
-        <tr>
-          <td>${category.name}</td>
-          <td><img src="${category.img_link}" alt="Laptop Image" style="width:100px;"></td>
-          <td>${category.price}</td>
-        </tr>
-        `;
-                });
-
-                contentHtml += `</tbody></table>`;
-              }
+            if (data.method === "Keyword Extraction") {
+              resultText += `Price: ${data.price || "N/A"}, RAM: ${
+                data.ram || "N/A"
+              }, GPU: ${data.gpu || "N/A"}<br>`;
+            } else if (data.method === "Classification") {
+              resultText += `Category: ${data.category}, Confidence: ${data.confidence}<br>`;
             }
 
-            // Display the recommendations
-            document.getElementById("recommendationCards").innerHTML =
-              contentHtml;
+            // Clear previous recommendations
+            $("#predictionResult").html(resultText);
+
+            // Check if there are recommendations
+            if (data.recommendations && data.recommendations.length > 0) {
+              data.recommendations.forEach((laptop) => {
+                const laptopHtml = `
+              <div class="laptop">
+                <img src="${laptop.img_link}" alt="${laptop.name}">
+                <h3>${laptop.name}</h3>
+                <p>Price: ${laptop.price}</p>
+              </div>
+            `;
+                $("#predictionResult").append(laptopHtml);
+              });
+            } else {
+              $("#predictionResult").append("No recommendations available.");
+            }
           })
           .catch((error) => {
             console.error("Error:", error);

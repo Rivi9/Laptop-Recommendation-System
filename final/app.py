@@ -2,10 +2,15 @@ from flask import Flask, render_template, request, jsonify
 import pandas as pd
 from advance_rec_dropdown import *
 import pickle
+from sentence_rec import *
 
 app = Flask(__name__)
 # Load laptop data from CSV
 laptops_df = pd.read_csv("laptops_cleaned.csv")
+
+# Load the Word2Vec model
+new = pickle.load(open('dataframe.pkl', 'rb'))
+word2vec_similarity = pickle.load(open('word2vec_similarity.pkl', 'rb'))
 
 @app.route('/', methods=['GET', 'POST'])
 def start():
@@ -25,18 +30,15 @@ def advance_rec_drop():
         price = request.form.get("priceRange")
         ram = request.form.get("ram")
         gpu = request.form.get("gpu")
-        advance_rec_dropdown(price, ram, gpu)
-        recommendation = advance_rec_dropdown(price, ram, gpu)
+        cpu = request.form.get("cpu")
+        advance_rec_dropdown(price, ram, gpu, cpu)
+        recommendation = advance_rec_dropdown(price, ram, gpu, cpu)
         return render_template('recommendations2.html', recommendation=recommendation)
 
 
 @app.route('/backToRecPage1', methods=['GET', 'POST'])
 def backToRecPage1():
     return render_template('recommendationPage1.html')
-
-# Load the Word2Vec model
-new = pickle.load(open('dataframe.pkl', 'rb'))
-word2vec_similarity = pickle.load(open('word2vec_similarity.pkl', 'rb'))
 
 # Function to recommend laptops
 def recommend(use):
@@ -54,7 +56,9 @@ def recommend(use):
 
 @app.route('/toRecPage2', methods=['GET', 'POST'])
 def backToRecPage2():
-    return render_template('recommendationPage2.html')
+    gpus_list = laptops_df['Gpu'].unique().tolist()
+    cpus_list = laptops_df['Cpu'].unique().tolist()
+    return render_template('recommendationPage2.html', gpus_list=gpus_list, cpus_list=cpus_list)
 
 @app.route('/backToSelectPage', methods=['GET', 'POST'])
 def backToSelectPage():
@@ -87,6 +91,59 @@ def get_recommendations():
         recommendations = initial_recommendations[:10]
         
     return render_template('recommendations.html', recommendations=recommendations)
+
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = request.get_json(force=True)
+    sentence = data['sentence']
+    priceRange = data.get('priceRange', None)  # Extract price range from the request
+
+    # Extract keywords first
+    price, ram, gpu = preprocess_text(sentence)
+    recommendations = []  # Initialize recommendations list
+
+    # extracted keywords for recommendation
+    if any([price, ram, gpu]):
+        # If specific keywords were found - use keywords for recommendations
+        filtered_df = filter_laptops(price=price, ram=ram, gpu=gpu, priceRange=priceRange)
+        recommendations = recommend_based_on_filter(filtered_df)
+
+    else:
+        # No specific keywords - use the classification model
+        category, confidence = predict_category(sentence)
+
+        # Initially get recommendations without considering the price range
+        initial_recommendations = recommend_sentence(category)
+
+        # Filter recommendations based on the selected price range
+        if priceRange:
+            range_min, range_max = price_range_mappings.get(priceRange, (None, None))
+            filtered_recommendations = []
+            for rec in initial_recommendations:
+                if range_min is not None and rec['price'] < range_min:
+                    continue
+                if range_max is not None and rec['price'] > range_max:
+                    continue
+                filtered_recommendations.append(rec)
+                if len(filtered_recommendations) == 10:  # Break after adding the 10th recommendation
+                    break
+            recommendations = filtered_recommendations
+        else:
+            recommendations = initial_recommendations[:10]
+
+    response = {
+        'method': 'Classification' if not any([price, ram, gpu]) else 'Keyword Extraction',
+        'category': category if not any([price, ram, gpu]) else None,
+        'confidence': confidence if not any([price, ram, gpu]) else None,
+        'price': price if any([price, ram, gpu]) else None,
+        'ram': ram if any([price, ram, gpu]) else None,
+        'gpu': gpu if any([price, ram, gpu]) else None,
+        'recommendations': recommendations
+    }
+
+    response = convert_numpy(response)  # Convert numpy types to native Python types
+    return jsonify(response)
 
 
 if __name__ == '__main__':
