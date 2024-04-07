@@ -13,6 +13,14 @@
   </head>
 
   <body>
+  <nav class="nav">
+            <ul class="nav-links">
+              <li class="center"><form action="/" method="POST" name="dataform"><button>Home</button></form></li>
+                <li class="center"><form action="/getStarted" method="POST" name="dataform"><button>Recommendations</button></form></li>
+              <li class="center"><form action="/about_us" method="POST" name="dataform"><button>About Us</button></form></li>
+            </ul>
+        </nav>
+    <br><br><br><br>
     <div class="wrapper">
       <form action="">
         <h1>Recommendation</h1>
@@ -97,6 +105,7 @@
             <th>Company</th>
             <th>Product</th>
             <th>Ram</th>
+            <th>Cpu</th>
             <th>Gpu</th>
             <th>Price ($)</th>
           </tr>
@@ -109,6 +118,7 @@
           <td>${laptop.Company}</td>
           <td>${laptop.Product}</td>
           <td>${laptop.Ram}</td>
+           <td>${laptop.Cpu}</td>
           <td>${laptop.Gpu}</td>
           <td>${laptop.Price}</td>
         </tr>
@@ -153,5 +163,10 @@
           });
       }
     </script>
+  <footer>
+            <p>Copyright &copy; 2024 All rights reserved by Group 4&nbsp;&nbsp;|&nbsp;&nbsp;</p>
+                <form action="/about_us" method="POST" name="dataform"><button>About Us</button></form>
+            <div class="gototop"><a href="#"><img class="topimg" src="../static/img/pngwing.com.png"/></a></div>
+        </footer>
   </body>
 </html>

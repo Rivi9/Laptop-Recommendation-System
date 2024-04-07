@@ -126,7 +126,7 @@ def filter_laptops(price=None, ram=None, gpu=None, priceRange=None):
         filtered_df = filtered_df[filtered_df['Ram'].astype(int) >= ram_value]
 
     if gpu is not None:
-        filtered_df = filtered_df[filtered_df['processor'].apply(lambda x: gpu.lower() in x.lower())]
+        filtered_df = filtered_df[filtered_df['Gpu'].apply(lambda x: gpu.lower() in x.lower())]
 
     return filtered_df
 
@@ -137,9 +137,10 @@ def recommend_based_on_filter(filtered_df):
         company = row['Company']
         name = row['Product']
         gpu = row['Gpu']
+        cpu = row['Cpu']
         ram = row['Ram']
         price = row['Price']
-        recommendations.append({'Company': company, 'Product': name, 'Gpu': gpu, 'Ram': ram, 'Price': price})
+        recommendations.append({'Company': company, 'Product': name, 'Cpu': cpu, 'Gpu': gpu, 'Ram': ram, 'Price': price})
         if len(recommendations) == 10:  # top 10 recommendations
             break
 

@@ -5,12 +5,18 @@
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
-        <title>
-            About Us
-		</title>
+        <link rel="stylesheet" href="../static/css/recommendationStyle.css">
+        <title>About Us</title>
 	</head>
     <body>
         <br><br>
+        <nav class="nav">
+            <ul class="nav-links">
+              <li class="center"><form action="/" method="POST" name="dataform"><button>Home</button></form></li>
+                <li class="center"><form action="/getStarted" method="POST" name="dataform"><button>Recommendations</button></form></li>
+              <li class="center"><form action="/about_us" method="POST" name="dataform"><button>About Us</button></form></li>
+            </ul>
+        </nav>
         <div class="wrap">
             <div class="box">
               <div class="box-top">
@@ -37,7 +43,7 @@
                 <img class="box-image" src="../static/img/aboutUs/Rivindu.jpg" alt="Rivindu">
                 <div class="title-flex">
                   <h3 class="box-title">Rivindu Bopage</h3>
-                  <p class="user-follow-info">21 Years</p>
+                  <p class="user-follow-info">19 Years</p>
                 </div>
                 <p class="description">I'm a student of Informatics Institute of Technology(IIT) affiliated with Robert Gordon University Aberdeen(RGU) currently following a degree of Artificial Intelligence and Data Science.</p>
               </div>
@@ -47,13 +53,17 @@
                 <img class="box-image" src="../static/img/aboutUs/Rushdi.jpg" alt="Rushdi">
                 <div class="title-flex">
                   <h3 class="box-title">Rushdi Mohideen</h3>
-                  <p class="user-follow-info">21 Years</p>
+                  <p class="user-follow-info">22 Years</p>
                 </div>
                 <p class="description">I'm a student of Informatics Institute of Technology(IIT) affiliated with Robert Gordon University Aberdeen(RGU) currently following a degree of Artificial Intelligence and Data Science.</p>
               </div>
             </div>
           </div>
-
+        <footer>
+            <p>Copyright &copy; 2024 All rights reserved by Group 4&nbsp;&nbsp;|&nbsp;&nbsp;</p>
+                <form action="/about_us" method="POST" name="dataform"><button>About Us</button></form>
+            <div class="gototop"><a href="#"><img class="topimg" src="../static/img/pngwing.com.png"/></a></div>
+        </footer>
     </body>
 
 </html>

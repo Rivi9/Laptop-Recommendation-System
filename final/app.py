@@ -14,11 +14,19 @@ word2vec_similarity = pickle.load(open('word2vec_similarity.pkl', 'rb'))
 
 @app.route('/', methods=['GET', 'POST'])
 def start():
-    return render_template('page1Select.html')
+    return render_template('landingPage.html')
 
 @app.route('/select_dropdown', methods=['POST'])
 def select_dropdown():
     return render_template('recommendationPage1.html')
+
+@app.route('/getStarted', methods=['POST'])
+def get_started():
+    return render_template('page1Select.html')
+
+@app.route('/about_us', methods=['POST'])
+def about_us():
+    return render_template('aboutUs.html')
 
 @app.route('/select_sentence', methods=['POST'])
 def select_sentence():
@@ -57,7 +65,9 @@ def recommend(use):
 @app.route('/toRecPage2', methods=['GET', 'POST'])
 def backToRecPage2():
     gpus_list = laptops_df['Gpu'].unique().tolist()
+    gpus_list = sorted(gpus_list)
     cpus_list = laptops_df['Cpu'].unique().tolist()
+    cpus_list = sorted(cpus_list)
     return render_template('recommendationPage2.html', gpus_list=gpus_list, cpus_list=cpus_list)
 
 @app.route('/backToSelectPage', methods=['GET', 'POST'])
