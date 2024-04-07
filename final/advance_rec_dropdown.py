@@ -21,9 +21,10 @@ def advance_rec_dropdown(price, ram, gpu, cpu):
         company = recommendation.iloc[i, recommendation.columns.get_loc('Company')]
         product = recommendation.iloc[i, recommendation.columns.get_loc('Product')]
         ram = recommendation.iloc[i, recommendation.columns.get_loc('Ram')]
+        cpu = recommendation.iloc[i, recommendation.columns.get_loc('Cpu')]
         gpu = recommendation.iloc[i, recommendation.columns.get_loc('Gpu')]
         price = recommendation.iloc[i, recommendation.columns.get_loc('Price')]
-        recommended_laptops.append({'Company': company, 'Product': product, 'Ram': ram, 'Gpu': gpu, 'Price': price})
+        recommended_laptops.append({'Company': company, 'Product': product, 'Ram': ram, 'Cpu': cpu, 'Gpu': gpu, 'Price': price})
     return recommended_laptops
 
 def recommend_laptop_dropdown(price, ram, gpu, cpu):
@@ -47,7 +48,7 @@ def recommend_laptop_dropdown(price, ram, gpu, cpu):
     #print(len(filtered_laptops))
     # Sort laptops by price and return the top recommendation
     if not filtered_laptops.empty:
-        return filtered_laptops.sort_values(by='Price').iloc[0]
+        return filtered_laptops.sort_values(by='Price')
         #return filtered_laptops
     #if there are no results for the given inputs then the system will use the similar GPUs and similar CPUs
     else:
@@ -110,7 +111,7 @@ def recommend_laptop_without_gpu(price, ram, cpu, similar_cpus):
 
 
     if not filtered_laptops.empty:
-        return filtered_laptops.sort_values(by='Price').iloc[0]
+        return filtered_laptops.sort_values(by='Price')
         #return filtered_laptops.sort_values(by='Price')
         #return filtered_laptops
     else:
@@ -132,7 +133,7 @@ def recommend_laptop_try1(price, ram, gpu, cpu, similar_gpus, similar_cpus):
 
     if not filtered_laptops.empty:
         print("with gpu")
-        return filtered_laptops.sort_values(by='Price').iloc[0]
+        return filtered_laptops.sort_values(by='Price')
     else:
         # if there are no results for the given inputs then the system will use the similar GPUs
         similar_cpus = find_similar_cpu(cpu, cpus_list, 0.9)
