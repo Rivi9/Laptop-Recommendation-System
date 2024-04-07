@@ -18,7 +18,7 @@ word2vec_similarity = pickle.load(open('word2vec_similarity.pkl', 'rb'))
 nlp = spacy.load("en_core_web_lg")
 
 # Load FastText model for sentence classification
-model = fasttext.load_model("input_classificationNew.bin")
+model = fasttext.load_model("input_classification.bin")
 
 # Set of stopwords
 stop_words = set(stopwords.words('english'))
