@@ -3,20 +3,15 @@ import difflib
 
 laptops_df = pd.read_csv("laptops_cleaned.csv")
 
-# price = 2339.69
-# ram = 8
-# gpu = "Intel iris plus graphics 640"
-# cpu = "Intel Core i7 g550U 1.85Hz"
-
 def advance_rec_dropdown(price, ram, gpu, cpu):
     recommendation = recommend_laptop_dropdown(price, ram, gpu, cpu)
     recommendation = pd.DataFrame(recommendation)
-    print(recommendation)
     recommended_laptops = []
 
     length = 10
     if recommendation.shape[0] < 10:
         length = recommendation.shape[0]
+    #storing the selected laptops into a dictionary 
     for i in range(length):
         company = recommendation.iloc[i, recommendation.columns.get_loc('Company')]
         product = recommendation.iloc[i, recommendation.columns.get_loc('Product')]
@@ -33,7 +28,7 @@ def recommend_laptop_dropdown(price, ram, gpu, cpu):
     """
     price = float(price)
     ram = int(ram)
-    """Recommend a laptop based on price, RAM, and GPU."""
+    """Recommend a laptop based on price, RAM, CPU and GPU."""
     # Filter laptops based on user input
     filtered_laptops = laptops_df
     if price:
@@ -47,15 +42,12 @@ def recommend_laptop_dropdown(price, ram, gpu, cpu):
     # Sort laptops by price and return the top recommendation
     if not filtered_laptops.empty:
         return filtered_laptops.sort_values(by='Price')
-        #return filtered_laptops
     #if there are no results for the given inputs then the system will use the similar GPUs and similar CPUs
     else:
-        #if there are no laptops for the given exact inputs  it looks for something with a similar GPU and CPU
         similar_gpus = find_similar_gpu(gpu, gpus_list)
         similar_cpus = find_similar_cpu(cpu, cpus_list, 0.8)
         recommendation = recommend_laptop_try1(price, ram, gpu, cpu, similar_gpus, similar_cpus)
         return recommendation
-        #return "No laptops match the specified criteria."
 
 
 gpus_list = laptops_df['Gpu'].unique().tolist()
@@ -74,7 +66,7 @@ def find_similar_gpu(user_gpu, gpus_list):
 
 def find_similar_cpu(user_cpu, cpus_list, similarity_value):
     """
-    Find CPUs in the list that are similar to the user-specified GPU.
+    Find CPUs in the list that are similar to the user-specified CPU.
     """
     similar_cpus = []
     words = user_cpu.split()
@@ -87,7 +79,7 @@ def find_similar_cpu(user_cpu, cpus_list, similarity_value):
 
 def recommend_laptop_without_gpu(price, ram, cpu, similar_cpus):
     print("without gpu")
-    """Recommend a laptop based on price, RAM, and GPU."""
+    """Recommend a laptop based on price, RAM, and CPU."""
     # Filter laptops based on user input
     filtered_laptops = laptops_df
     if price:
@@ -111,13 +103,11 @@ def recommend_laptop_without_gpu(price, ram, cpu, similar_cpus):
 
     if not filtered_laptops.empty:
         return filtered_laptops.sort_values(by='Price')
-        #return filtered_laptops.sort_values(by='Price')
-        #return filtered_laptops
     else:
         return None
 
 def recommend_laptop_try1(price, ram, gpu, cpu, similar_gpus, similar_cpus):
-    """Recommend a laptop based on price, RAM, and GPU."""
+    """Recommend a laptop based on price, RAM, CPU and GPU using similarity."""
     # Filter laptops based on user input with similar GPUs and CPUs
     filtered_laptops = laptops_df
     if price:
@@ -138,4 +128,3 @@ def recommend_laptop_try1(price, ram, gpu, cpu, similar_gpus, similar_cpus):
         similar_cpus = find_similar_cpu(cpu, cpus_list, 0.9)
         recommendation = recommend_laptop_without_gpu(price, ram, cpu, similar_cpus)
         return recommendation
-# advance_rec_dropdown(price,ram,gpu)
