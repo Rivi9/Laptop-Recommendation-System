@@ -6,6 +6,7 @@ import pickle
 import re
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer 
 
 laptops_df = pd.read_csv("laptops_cleaned.csv")
 
@@ -86,11 +87,12 @@ def preprocess_text(text):
 
 
 def preprocess_with_stemming(text):
+    stemmer = PorterStemmer()
     # Preprocess text for classification
     text = re.sub(r'[^\w\s]', '', text).lower()
     text = re.sub(' +', ' ', text)
     word_tokens = word_tokenize(text)
-    filtered_text = [word for word in word_tokens if word not in stop_words]
+    filtered_text = [stemmer.stem(word) for word in word_tokens if word not in stop_words]
     return ' '.join(filtered_text)
 
 
