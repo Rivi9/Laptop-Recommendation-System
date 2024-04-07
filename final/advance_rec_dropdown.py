@@ -44,14 +44,13 @@ def recommend_laptop_dropdown(price, ram, gpu, cpu):
         filtered_laptops = filtered_laptops[filtered_laptops['Gpu'] == gpu]
     if cpu:
         filtered_laptops = filtered_laptops[filtered_laptops['Cpu'] == cpu]
-
-    #print(len(filtered_laptops))
     # Sort laptops by price and return the top recommendation
     if not filtered_laptops.empty:
         return filtered_laptops.sort_values(by='Price')
         #return filtered_laptops
     #if there are no results for the given inputs then the system will use the similar GPUs and similar CPUs
     else:
+        #if there are no laptops for the given exact inputs  it looks for something with a similar GPU and CPU
         similar_gpus = find_similar_gpu(gpu, gpus_list)
         similar_cpus = find_similar_cpu(cpu, cpus_list, 0.8)
         recommendation = recommend_laptop_try1(price, ram, gpu, cpu, similar_gpus, similar_cpus)
@@ -119,7 +118,7 @@ def recommend_laptop_without_gpu(price, ram, cpu, similar_cpus):
 
 def recommend_laptop_try1(price, ram, gpu, cpu, similar_gpus, similar_cpus):
     """Recommend a laptop based on price, RAM, and GPU."""
-    # Filter laptops based on user input
+    # Filter laptops based on user input with similar GPUs and CPUs
     filtered_laptops = laptops_df
     if price:
         filtered_laptops = filtered_laptops[filtered_laptops['Price'] <= price]
@@ -135,7 +134,7 @@ def recommend_laptop_try1(price, ram, gpu, cpu, similar_gpus, similar_cpus):
         print("with gpu")
         return filtered_laptops.sort_values(by='Price')
     else:
-        # if there are no results for the given inputs then the system will use the similar GPUs
+        # if there are no results for the given inputs then the system will use only the similar CPUs
         similar_cpus = find_similar_cpu(cpu, cpus_list, 0.9)
         recommendation = recommend_laptop_without_gpu(price, ram, cpu, similar_cpus)
         return recommendation
